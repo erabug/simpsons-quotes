@@ -1,6 +1,4 @@
-# required libraries
-library(XML)
-library(stringr)
+library(XML); library(stringr)
 
 #---------------------------------------#
 #           Get & clean HTML            #
@@ -16,8 +14,11 @@ getHtml <- function(episodeCode) {
 
 # grab the title (and alt title, if exists) from the html
 getTitle <- function(htmlCode) {
-    title <- str_trim(strsplit(grep("<TITLE>", htmlCode, value=T), "<TITLE>")[[1]][2])
     location <- grep("<PRE>", htmlCode)[1] + 1
+    start <- grep("<TITLE>", htmlCode, value=T)
+    ifelse(length(start) == 0,
+           title <- str_trim(strsplit(htmlCode[location], "Written")[[1]][1]),
+           title <- str_trim(strsplit(start, "<TITLE>")[[1]][2]))
     altTitle <- htmlCode[location + 1]
     if (grepl("a.k.a.", altTitle)) {
         altTitle <- substr(altTitle, grepRaw("a.k.a", altTitle) + 7, nchar(altTitle) - 1)
@@ -52,10 +53,8 @@ findDuds <- function(rawQuote) {
 cleanRawQuotes <- function(rawQuotes, episodeTitle) {
     duds <- grep("dud", lapply(rawQuotes, findDuds))
     if (length(duds) > 0) rawQuotes <- rawQuotes[-duds]
-  
     multiples <- grep("true", lapply(rawQuotes, checkMultiples, episodeTitle))
     titleLength <- nchar(episodeTitle)
-    
     while (length(multiples) > 0) {   
         quote <- rawQuotes[multiples[1]]
         titles <- grepRaw(episodeTitle, quote, all=T)    
@@ -152,42 +151,44 @@ stripQuote <- function(string, episodeTitle) {
 # master function, returns clean list of quote lists from an episode
 quotesFromEpisode <- function(episodeCode) {
     htmlCode <- getHtml(episodeCode)
+    if (length(grep("<HTML>", htmlCode)) == 0) {
+        stop("Episode HTML is not in proper format")
+        next
+    }
     episodeTitle <- getTitle(htmlCode)
     if (length(episodeTitle) > 1) {
         ep1 <- length(grep(episodeTitle[1], htmlCode))
         ep2 <- length(grep(episodeTitle[2], htmlCode))
-        ifelse(ep1 > ep2, episodeTitle <- episodeTitle[1], episodeTitle <- episodeTitle[2])
+        ifelse(ep1 > ep2, 
+               episodeTitle <- episodeTitle[1], 
+               episodeTitle <- episodeTitle[2])
     }
     quotes <- lapply(parseQuotes(htmlCode, episodeTitle), stripQuote, episodeTitle)
     return(quotes)
 }
 
+#---------------------------------------#
+#          Quotes data frames           #
+#---------------------------------------#
+
 # determines the episode codes for a given season
 getEpisodeCodes <- function(season) {
     codes <- c()
-    if (season == 1) {
-        prefix <- "7G"
-        num <- 13
-    }
-    if(season == 2) {
-        prefix <- "7F"
-        num <- 22
-    }
-    if(season == 3) {
-        prefix <- "8F"
-        num <- 22
-    }
+    if (season == 1) {prefix <- "7G"; num <- 13}
+    if (season == 2) {prefix <- "7F"; num <- 22}
+    if (season == 3) {prefix <- "8F"; num <- 22}
+    if (season == 4) {prefix <- "9F"; num <- 20}
     for (i in 1:num) {
         if (i < 10) codes <- append(codes, paste0(prefix, 0, i))
         if (i > 9) codes <- append(codes, paste0(prefix, i)) 
     }
-    if (season == 3) codes <- append(codes, c("7F23", "7F24"))
+    if (season == 3) {
+        remove <- "8F18"
+        codes <- append(codes[! codes %in% remove], c("7F23", "7F24"))
+    }
+    if (season == 4) codes <- append(codes, c("8F18", "8F24"))
     return(codes)
 }
-
-#---------------------------------------#
-#          Quotes data frames           #
-#---------------------------------------#
 
 # returns a two-column data frame from an episode quote list
 makeDF <- function(quoteList) {
@@ -201,12 +202,14 @@ makeSeasonDF <- function(season) {
     episodeCodes <- getEpisodeCodes(season)
     bigDF <- data.frame()
     for (episode in episodeCodes) {
-        data <- quotesFromEpisode(episode)
-        df <- data.frame()
-        df <- do.call("rbind", lapply(data, makeDF))
-        df$episode <- getTitle(getHtml(episode))[1]
-        df$season <- paste("Season", season)
-        bigDF <- rbind(bigDF, df[c("season", "episode", "quote", "speaker")])
+        try({
+            data <- quotesFromEpisode(episode)
+            df <- data.frame()
+            df <- do.call("rbind", lapply(data, makeDF))
+            df$episode <- getTitle(getHtml(episode))[1]
+            df$season <- paste("Season", season)
+            bigDF <- rbind(bigDF, df[c("season", "episode", "quote", "speaker")])
+        })
     }
     return(bigDF)
 }
@@ -240,7 +243,7 @@ sampleFromSeason <- function(seasonQuotes) {
 #---------------------------------------#
 
 # create a DF of quotes from season X
-quotesDF <- makeSeasonDF(2)
+quotesDF <- makeSeasonDF(3)
 
 # create a DF of quotes from multiple seasons
 quotesDF <- makeQuotesDF(1:2)
@@ -249,7 +252,7 @@ quotesDF <- makeQuotesDF(1:2)
 sampleFromSeason(quotesDF)
 
 # get a list of quote lists from episode
-quotesFromEpisode("8F07")
+quotesFromEpisode("8F23")
 
 # for testing
 episodeCode <- "8F07"
@@ -259,3 +262,5 @@ episodeCode <- "8F07"
 # 7F14: 25, 28 TYPOS IN THE TITLES
 # 7F18: 43
 # 7F21: 33
+# 8F22
+# 8F23
