@@ -243,7 +243,7 @@ sampleFromSeason <- function(seasonQuotes) {
 #---------------------------------------#
 
 # create a DF of quotes from season X
-quotesDF <- makeSeasonDF(3)
+quotesDF <- makeSeasonDF(2)
 
 # create a DF of quotes from multiple seasons
 quotesDF <- makeQuotesDF(1:2)
@@ -264,3 +264,13 @@ episodeCode <- "8F07"
 # 7F21: 33
 # 8F22
 # 8F23
+
+# playing with JSON
+library(RJSONIO)
+
+# my version
+x <- toJSON(quotesDF[1, ]) # just one row
+x <- apply(quotesDF, 1, toJSON) # whole df
+cat(x)
+
+writeLines(x, "quotes.JSON")
