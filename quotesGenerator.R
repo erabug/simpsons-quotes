@@ -270,7 +270,8 @@ library(RJSONIO)
 
 # my version
 x <- toJSON(quotesDF[1, ]) # just one row
-x <- apply(quotesDF, 1, toJSON) # whole df
+x <- apply(quotesDF[1:10,], 1, toJSON, pretty=T) # whole df
+x <- apply(quotesDF, 1, function(quotesDF){paste(toJSON(quotesDF), ',')})
 cat(x)
 
 writeLines(x, "quotes.JSON")

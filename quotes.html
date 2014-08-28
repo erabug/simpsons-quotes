@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <title>Testing</title>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.10.2'></script>
+
+</head>
+<body>
+
+    <button id="getdata-button">Get Random Quote</button>
+
+    <div id="bees"></div>
+
+    <script>
+        $(document).ready(function(){
+            $('#getdata-button').live('click', function(){
+                $.ajax({type: 'GET',
+                    url: 'quotes.json',
+                    dataType: 'json',
+                    success: function(data) {
+                        var entry = data[Math.floor(Math.random()*data.length)];
+                        //console.log(entry);
+                        if ($.isArray(entry.quote)) {
+                            $('#bees').append("<p>")
+                            for (i in entry.quote) {
+                                $('#bees').append(entry.quote[i] + '<br>');
+                            }
+                            $('#bees').append('</p>')
+                        } else {
+                            $('#bees').append('<p>\"' + entry.quote + '\"</p>')
+                        }
+                        $('#bees').append('-- ' + entry.speaker + ', ' + '\"' + entry.episode + '\" (' + entry.season + ')');
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                    }  
+                });
+            });
+        });
+
+    </script>
+
+</body>
+</html>
