@@ -1,6 +1,14 @@
 simpsons-quotes
-===============
+---------------
+To practice cleaning data in R, I decided to build a Simpsons quote generator. First, I collected quotes from episode transcripts on the internet then I cleaned and sorted them into a dataframe. My goal is to create a simple web interface to generate random quotes or search for specific quotes.
 
-I created an R script to scrape scripts of Simpsons episodes, clean the text, and organize/generate quotes.
+**To do**
+* [x] write script to scrape html for the first few seasons from simpsonsarchive.com
+* [x] write script to clean and separate quotes, speakers, episode title from the raw html into a list of lists
+* [x] convert the quote lists to a dataframe, then convert and save as a JSON file
+* [ ] write simple web page to query JSON file and return random quote
+* [ ] build user input forms such as number of quotes, season, and episode
 
-My goal is to create a database of quotes from as many seasons as I can. Then, I'll make simple webpage that will allow users to search for specific quotes (by season, episode, and speakers) or generate a random quote from the database.
+**Questions**
+* Can I host this web page on git?
+* Is JSON the most appropriate format for a simple (and static) text-based database?
