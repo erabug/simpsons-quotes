@@ -12,7 +12,9 @@
 
     <button id="getdata-button">Get Random Quote</button>
 
-    <p id="bees"></p>
+    <p id="quote"></p>
+    <p id="details"></p>
+    <p id="episode"></p>
 
     <script>
         $(document).ready(function(){
@@ -23,17 +25,15 @@
                     success: function(data) {
                         var entry = data[Math.floor(Math.random()*data.length)];
                         // console.log(entry);
-                        console.log($.isArray(entry.quote));
-                        $('#bees').html("");
+                        // console.log($.isArray(entry.quote));
+                        $('#quote').html("");
                         if ($.isArray(entry.quote)) {
-                            // console.log(entry.quote[0]);
-                            // console.log(entry.quote[1]);
-                            for (i in entry.quote) {
-                                $('#bees').append('<p>\"' + entry.quote[i] + '\"</p>');
-                            }
+                            $('#quote').html(entry.quote.join("<br>"))
                         } else {
-                            $('#bees').html('\"' + entry.quote + '\"');
+                            $('#quote').html(entry.quote);
                         }
+                        $('#details').html("-- " + entry.speaker)
+                        $('#episode').html(entry.episode + " (" + entry.season + ")")
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) { 
                         alert("sadface"); 
