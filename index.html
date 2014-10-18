@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <button id="getdata-button">Get Random Quote</button>
+    <button id="getdata-button">Get Random Quote!</button>
 
     <p id="quote"></p>
     <p id="details"></p>
@@ -35,9 +35,9 @@
                         $('#details').html("-- " + entry.speaker)
                         $('#episode').html(entry.episode + " (" + entry.season + ")")
                     },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                        alert("sadface"); 
-                    }  
+                    // error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    //     alert("sadface"); 
+                    // }  
                 });
             });
         });
