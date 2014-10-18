@@ -4,8 +4,7 @@
 
     <meta charset="utf-8">
     <title>Testing</title>
-    // <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.10.2'></script>
-    <!-- // <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -18,8 +17,9 @@
 
     <script>
         $(document).ready(function(){
-            $('#getdata-button').live('click', function(){
-                $.ajax({type: 'GET',
+            $('#getdata-button').on('click', function(){
+                $.ajax({
+                    type: 'GET',
                     url: 'quotes.json',
                     dataType: 'json',
                     success: function(data) {
