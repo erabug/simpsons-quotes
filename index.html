@@ -3,45 +3,66 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Testing</title>
+    <title>Simpsons Quotes</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="quotes.css">
 
 </head>
 <body>
 
-    <button id="getdata-button">Get Random Quote!</button>
+    <h1>Simpsons Quotes</h1>
 
-    <p id="quote"></p>
-    <p id="details"></p>
-    <p id="episode"></p>
+    <form id="request-form">
+
+        <div>
+            Season
+            <select name="season">
+                <option value="">-- Choose --</option>
+                <option value="season-1">Season 1</option>
+                <option value="season-2">Season 2</option>
+                <option value="season-3">Season 3</option>
+                <option value="season-4">Season 4</option>            
+            </select>
+        </div>
+
+        <button type="button" id="getdata-button">Random Quote!</button>
+
+    </form>
+
+    <div id="result">
+        <p id="quote"></p>
+        <p id="details"></p>
+        <div id="source">
+            <div id="episode"></div>
+            <div id="season"></div>
+        </div>
+    </div>
 
     <script>
-        $(document).ready(function(){
-            $('#getdata-button').on('click', function(){
-                $.ajax({
-                    type: 'GET',
-                    url: 'quotes.json',
-                    dataType: 'json',
-                    success: function(data) {
-                        var entry = data[Math.floor(Math.random()*data.length)];
+    $(document).ready(function(){
+        $('#getdata-button').on('click', function(){
+            $.ajax({
+                type: 'GET',
+                url: 'quotes.json',
+                dataType: 'json',
+                success: function(data) {
+                    var entry = data[Math.floor(Math.random()*data.length)];
                         // console.log(entry);
-                        // console.log($.isArray(entry.quote));
                         $('#quote').html("");
                         if ($.isArray(entry.quote)) {
-                            $('#quote').html(entry.quote.join("<br>"))
+                            $('#quote').html(entry.quote.join("</p></p>"))
+                            $('#details').html("")
                         } else {
                             $('#quote').html(entry.quote);
+                            // $('#details').html("-- " + entry.speaker.split(" ", 1))
+                            $('#details').html("-- " + entry.speaker)
                         }
-                        $('#details').html("-- " + entry.speaker)
-                        $('#episode').html(entry.episode + " (" + entry.season + ")")
+                        $('#episode').html(entry.episode)
+                        $('#season').html(" (" + entry.season + ")")
                     },
-                    // error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                    //     alert("sadface"); 
-                    // }  
                 });
-            });
         });
-
+    });
     </script>
 
 </body>
