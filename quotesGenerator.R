@@ -178,6 +178,10 @@ getEpisodeCodes <- function(season) {
     if (season == 2) {prefix <- "7F"; num <- 22}
     if (season == 3) {prefix <- "8F"; num <- 22}
     if (season == 4) {prefix <- "9F"; num <- 20}
+    if (season == 5) {prefix <- "1F"; num <- 20}
+    if (season == 6) {prefix <- "2F"; num <- 22}
+    if (season == 7) {prefix <- "3F"; num <- 22}
+    
     for (i in 1:num) {
         if (i < 10) codes <- append(codes, paste0(prefix, 0, i))
         if (i > 9) codes <- append(codes, paste0(prefix, i)) 
@@ -187,6 +191,17 @@ getEpisodeCodes <- function(season) {
         codes <- append(codes[! codes %in% remove], c("7F23", "7F24"))
     }
     if (season == 4) codes <- append(codes, c("8F18", "8F24"))
+    if (season == 5) {
+        remove <- "1F17"
+        codes <- append(codes[! codes %in% remove], c("9F21", "9F22"))
+    }
+    if (season == 6) {
+        remove <- c("2F20", "2F17")
+        codes <- append(codes[! codes %in% remove], c("1F17", "1F20", "2F31", "2F32", "2F33"))
+    }        
+    if (season == 7) {
+        codes <- append(codes, c("2F17", "2F20"))
+    }
     return(codes)
 }
 
@@ -243,10 +258,10 @@ sampleFromSeason <- function(seasonQuotes) {
 #---------------------------------------#
 
 # create a DF of quotes from season X
-quotesDF <- makeSeasonDF(2)
+quotesDF <- makeSeasonDF(6)
 
 # create a DF of quotes from multiple seasons
-quotesDF <- makeQuotesDF(1:2)
+quotesDF <- makeQuotesDF(1:7)
 
 # sample from the quotes DF
 sampleFromSeason(quotesDF)
@@ -274,4 +289,4 @@ x <- apply(quotesDF[1:10,], 1, toJSON, pretty=T) # whole df
 x <- apply(quotesDF, 1, function(quotesDF){paste(toJSON(quotesDF), ',')})
 cat(x)
 
-writeLines(x, "quotes.JSON")
+writeLines(x, "quotes3.json")

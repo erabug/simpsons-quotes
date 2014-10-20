@@ -14,7 +14,7 @@
 
     <form id="request-form">
 
-        <div>
+<!--         <div>
             Season
             <select name="season">
                 <option value="">-- Choose --</option>
@@ -23,7 +23,7 @@
                 <option value="season-3">Season 3</option>
                 <option value="season-4">Season 4</option>            
             </select>
-        </div>
+        </div> -->
 
         <button type="button" id="getdata-button">Random Quote!</button>
 
@@ -37,6 +37,11 @@
             <div id="season"></div>
         </div>
     </div>
+
+<!--     <div id="thanks">
+        Quotes and details are from the lovingly transcribed work found at the
+        <a href="http://www.simpsonsarchive.com/episodes/">Simpsons Archives</a>.
+    </div> -->
 
     <script>
     $(document).ready(function(){
@@ -58,7 +63,7 @@
                             $('#details').html("-- " + entry.speaker)
                         }
                         $('#episode').html(entry.episode)
-                        $('#season').html(" (" + entry.season + ")")
+                        $('#season').html(entry.season)
                     },
                 });
         });

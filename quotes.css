@@ -47,11 +47,15 @@ button:hover {
     color: black;
 }
 
+a:link {
+    color: #cc0;
+}
+
 /* Put the results div toward the top right of the page */
 #result {
     position: absolute;
     top: 20%;
-    left: 40%;
+    left: 30%;
     margin-right: 30px;
     border-left: solid 5px #4c5e6f;   /* medium-blue */
     padding-left: 1em;
@@ -66,4 +70,11 @@ button:hover {
 #source {
   margin: 30px;
   text-align: right;
+}
+
+#thanks {
+  font-size: 85%;
+  font-style: italic;
+  /*position: absolute;*/
+  margin-top: 65%;
 }
