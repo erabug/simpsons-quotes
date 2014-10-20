@@ -7,6 +7,8 @@ To practice cleaning data in R, I decided to build a Simpsons quote generator. F
 * [x] write script to clean and separate quotes, speakers, episode title from the raw html into a list of lists
 * [x] convert the quote lists to a dataframe, then convert and save as a JSON file
 * [x] write simple web page to query JSON file and return random quote
+* [ ] refactor code to parse json entry for one-name speaker
 * [ ] build user input forms such as number of quotes, season, and episode
+* [ ] manipulate json query to filter for user requests
 
 **You can now visit this project on [git hub pages](http://erabug.github.io/simpsons-quotes).**
