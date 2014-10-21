@@ -1,11 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang='en'>
 <head>
 
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <title>Simpsons Quotes</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="quotes.css">
+    <link rel='stylesheet' href='quotes.css'>
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
 </head>
@@ -17,7 +16,7 @@
 
         <div>
             Season
-            <select name="<!-- season-selection -->">
+            <select name="season-selection">
                 <option value="">-- Choose --</option>
                 <option value="all">All Seasons</option>
                 <option value="1">Season 1</option>
@@ -45,61 +44,9 @@
         <a href="http://www.simpsonsarchive.com/episodes/">Simpsons Archives</a>.
     </div>
 
-    <script>
 
-    var seasons = {
-        '1': [],
-        '2': [],
-        '3': [],
-        '4': []
-    }
-
-    $(document).ready(function(){
-        $.ajax({
-            type: 'GET',
-            url: 'quotes.json',
-            dataType: 'json',
-            success: function(data) {
-                // console.log(data);
-                for (var i = 0; i < data.length; i++) {
-                    var str = data[i].season.split("")
-                    var season = str[str.length - 1]
-                    seasons[season].push(data[i])
-                }
-                // console.log("seasons:", seasons)
-            }   
-        });
-        $('#getdata-button').on('click', function(){
-            
-            var pQuote = $('#quote')
-            var pDetails = $('#details')
-
-            var value = $("#request-form option:selected").val()
-            // console.log('value', value)
-            if (value == 'all') {
-                var d = seasons[Math.floor(Math.random()*Object.keys(seasons).length)+1]
-                // console.log(d)
-            } else {
-                var d = seasons[value]
-            }
-            
-            var entry = d[Math.floor(Math.random()*d.length)]
-
-            pQuote.html("");
-            if ($.isArray(entry.quote)) {
-                pQuote.html(entry.quote.join("</p><p>"))
-                pDetails.html("")
-            } else {
-                pQuote.html(entry.quote);
-                pDetails.html("-- " + entry.speaker)
-            }
-            $('#episode').html(entry.episode)
-            $('#season').html(entry.season)
-
-        });
-
-    });
-    </script>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    <script src='quotes.js'></script>
 
 </body>
 </html>
