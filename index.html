@@ -17,7 +17,7 @@
 
         <div>
             Season
-            <select name="season-selection">
+            <select name="<!-- season-selection -->">
                 <option value="">-- Choose --</option>
                 <option value="all">All Seasons</option>
                 <option value="1">Season 1</option>
@@ -87,7 +87,7 @@
 
             pQuote.html("");
             if ($.isArray(entry.quote)) {
-                pQuote.html(entry.quote.join("</p></p>"))
+                pQuote.html(entry.quote.join("</p><p>"))
                 pDetails.html("")
             } else {
                 pQuote.html(entry.quote);
