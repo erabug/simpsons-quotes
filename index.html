@@ -6,6 +6,7 @@
     <title>Simpsons Quotes</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="quotes.css">
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
@@ -14,16 +15,17 @@
 
     <form id="request-form">
 
-<!--         <div>
+        <div>
             Season
-            <select name="season">
+            <select name="season-selection">
                 <option value="">-- Choose --</option>
-                <option value="season-1">Season 1</option>
-                <option value="season-2">Season 2</option>
-                <option value="season-3">Season 3</option>
-                <option value="season-4">Season 4</option>            
+                <option value="all">All Seasons</option>
+                <option value="1">Season 1</option>
+                <option value="2">Season 2</option>
+                <option value="3">Season 3</option>
+                <option value="4">Season 4</option>            
             </select>
-        </div> -->
+        </div>
 
         <button type="button" id="getdata-button">Random Quote!</button>
 
@@ -38,37 +40,63 @@
         </div>
     </div>
 
-<!--     <div id="thanks">
+    <div id="thanks">
         Quotes and details are from the lovingly transcribed work found at the
         <a href="http://www.simpsonsarchive.com/episodes/">Simpsons Archives</a>.
-    </div> -->
-
-
+    </div>
 
     <script>
+
+    var seasons = {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': []
+    }
+
     $(document).ready(function(){
-        $('#getdata-button').on('click', function(){
-            $.ajax({
-                type: 'GET',
-                url: 'quotes.json',
-                dataType: 'json',
-                success: function(data) {
-                    var entry = data[Math.floor(Math.random()*data.length)];
-                        // console.log(entry);
-                        $('#quote').html("");
-                        if ($.isArray(entry.quote)) {
-                            $('#quote').html(entry.quote.join("</p></p>"))
-                            $('#details').html("")
-                        } else {
-                            $('#quote').html(entry.quote);
-                            // $('#details').html("-- " + entry.speaker.split(" ", 1))
-                            $('#details').html("-- " + entry.speaker)
-                        }
-                        $('#episode').html(entry.episode)
-                        $('#season').html(entry.season)
-                    },
-                });
+        $.ajax({
+            type: 'GET',
+            url: 'quotes.json',
+            dataType: 'json',
+            success: function(data) {
+                // console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    var str = data[i].season.split("")
+                    var season = str[str.length - 1]
+                    seasons[season].push(data[i])
+                }
+                console.log("seasons:", seasons)
+            }   
         });
+        $('#getdata-button').on('click', function(){
+            
+            var pQuote = $('#quote')
+            var pDetails = $('#details')
+
+            var value = $("#request-form option:selected").val()
+
+            if (value == 'all') {
+                var d = seasons[Math.floor(Math.random()*Object.keys(seasons).length)]
+            } else {
+                var d = seasons[value]
+            }
+            
+            var entry = d[Math.floor(Math.random()*d.length)]
+
+            pQuote.html("");
+            if ($.isArray(entry.quote)) {
+                pQuote.html(entry.quote.join("</p></p>"))
+                pDetails.html("")
+            } else {
+                pQuote.html(entry.quote);
+                pDetails.html("-- " + entry.speaker)
+            }
+            $('#episode').html(entry.episode)
+            $('#season').html(entry.season)
+
+        });
+
     });
     </script>
 

@@ -1,12 +1,16 @@
 body {
     background-color: #2c3e4f;  /* dark blue */
+    background-color: #cc6600; /* dark orange*/
+    background-color: #333333;
     color: white;
     font-family: "Helvetica Neue", sans-serif;
+
     font-weight: 200;
     padding: 2em;
 }
 
 h1 {
+  font-family: 'Lobster', cursive;
     font-weight: 200;
     font-size: 400%;
     margin-top: 0;
@@ -30,6 +34,8 @@ select {
 
 button {
   background-color: #0c1e2f;  /* very dark blue */
+  background-color: #663300; /* brown */
+  background-color: #666666;
   color: white;
   border-radius: 10px;
   border: solid 1px white;
@@ -55,26 +61,31 @@ a:link {
 #result {
     position: absolute;
     top: 20%;
-    left: 30%;
+    left: 40%;
     margin-right: 30px;
     border-left: solid 5px #4c5e6f;   /* medium-blue */
+    border-left: solid 5px #FFCC99;
+    border-left: solid 5px #cccccc;
     padding-left: 1em;
     margin-left: 0;
+    /*width: 400px;*/
 
 }
 
 #episode {
-  font-style: italic;
+    font-style: italic;
 }
 
 #source {
-  margin: 30px;
-  text-align: right;
+    margin: 30px;
+    text-align: right;
 }
 
 #thanks {
-  font-size: 85%;
-  font-style: italic;
-  /*position: absolute;*/
-  margin-top: 65%;
+    font-size: 85%;
+    font-style: italic;
+    text-align: center;
+    position: fixed;
+    bottom: 10px;
+    /*width: 100%;*/
 }
