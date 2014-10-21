@@ -66,7 +66,7 @@
                     var season = str[str.length - 1]
                     seasons[season].push(data[i])
                 }
-                console.log("seasons:", seasons)
+                // console.log("seasons:", seasons)
             }   
         });
         $('#getdata-button').on('click', function(){
@@ -75,9 +75,10 @@
             var pDetails = $('#details')
 
             var value = $("#request-form option:selected").val()
-
+            // console.log('value', value)
             if (value == 'all') {
-                var d = seasons[Math.floor(Math.random()*Object.keys(seasons).length)]
+                var d = seasons[Math.floor(Math.random()*Object.keys(seasons).length)+1]
+                // console.log(d)
             } else {
                 var d = seasons[value]
             }
