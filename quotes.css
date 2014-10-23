@@ -1,23 +1,23 @@
 /* CSS inspired by madlibs.joelburton.com */
 
 body {
-    background-color: #333333; /* dark grey */
-    color: white;
-    font-family: "Helvetica Neue", sans-serif;
-    font-weight: 200;
-    padding: 2em;
+  background-color: #333333; /* dark grey */
+  color: white;
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 200;
+  padding: 2em;
 }
 
 h1 {
-    font-family: 'Lobster', cursive;
-    font-weight: 200;
-    font-size: 400%;
-    margin-top: 0;
+  font-family: 'Lobster', cursive;
+  font-weight: 200;
+  font-size: 400%;
+  margin-top: 0;
 }
 
 /* Make the rows of our form taller, so they're spaced-out */
 form > div {
-    height: 2em;
+  height: 2em;
 }
 
 /* Make our drop-down and our text boxes pushed over to the right
@@ -27,8 +27,8 @@ form > div {
 */
 input[type=text],
 select {
-    position: absolute;
-    left: 10em;
+  position: absolute;
+  left: 10em;
 }
 
 button {
@@ -45,46 +45,62 @@ button {
    a link that's been clicked, and :visited for a link that's been previously visited
 */
 button:hover {
-    cursor: pointer;
-    background-color: #cc0;  /* yellow */
-    color: black;
+  cursor: pointer;
+  background-color: #cc0;  /* yellow */
+  color: black;
 }
 
 a:link {
-    color: #cc0;
+  color: #cc0;
 }
 
 /* Put the results div toward the top right of the page */
 #result {
-    position: absolute;
-    top: 20%;
-    left: 240px;
-    margin-right: 30px;
-    border-left: solid 5px #cccccc; /* light grey */
-    padding-left: 1em;
-    margin-left: 0;
-    max-width: 400px;
-    min-width: 250px;
+  position: absolute;
+  top: 20%;
+  left: 240px;
+  margin-right: 30px;
+  border-left: solid 5px #cccccc; /* light grey */
+  padding-left: 1em;
+  margin-left: 0;
+  max-width: 500px;
+  min-width: 300px;
+}
+
+#quote-container {
+  margin-top: 10px;
+  width: 100%;
+}
+
+#speaker {
+  vertical-align: top;
+  width: 20%;
+  display: inline-block;
+}
+
+#line {
+  width: 80%;
+  display: inline-block;
 }
 
 #episode {
-    font-style: italic;
+  font-style: italic;
 }
 
 #details {
-    margin-top: 40px;
-    text-align: right;
+  margin-top: 40px;
+  text-align: right;
 }
 
 #source {
-    margin-top: 40px;
-    text-align: right;
+  margin-top: 40px;
+  text-align: right;
 }
 
 #thanks {
-    font-size: 85%;
-    font-style: italic;
-    text-align: center;
-    position: fixed;
-    bottom: 10px;
+  font-size: 85%;
+  font-style: italic;
+  text-align: center;
+  position: fixed;
+  bottom: 10px;
 }

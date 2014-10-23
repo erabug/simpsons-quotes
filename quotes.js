@@ -39,7 +39,17 @@ $(document).ready(function(){
         detailsP.html("");
 
         if ($.isArray(entry.quote)) {
-            quoteP.html(entry.quote.join("</p><p>"));
+            // quoteP.html(entry.quote.join("</p><p>"));
+            var lines = [];
+            $.each(entry.quote, function(e, val) {
+                var split = val.split(":");
+                var speaker = '<div id="speaker">' + split[0] + ':</div>';
+                var line = '<div id="line">' + split[1] + '</div>';
+                lines.push('<div id="quote-container">' + speaker + line + '</div>');
+            });
+            // console.log(lines);
+            $('#quote').html(lines);
+
         } else {
             quoteP.html(entry.quote);
             detailsP.html("-- " + entry.speaker);
@@ -49,3 +59,14 @@ $(document).ready(function(){
     });
 
 });
+
+
+
+
+
+
+
+
+
+
+
